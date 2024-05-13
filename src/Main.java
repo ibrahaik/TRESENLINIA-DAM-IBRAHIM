@@ -17,7 +17,7 @@ public class Main {
                 tui.jugadorActual();
                 tui.mostrarTaulell(joc.getTablero());
                 int[] posicions = tui.recollirJugada();
-                joc.jugar(posicions[0], posicions[1]);
+                joc.jugar(posicions[0], posicions[1], tui.getJugador());
             }
             if (joc.jugadaGuanyadora()){
                 tui.mostrarTaulell(joc.getTablero());

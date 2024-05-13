@@ -94,7 +94,7 @@ public class TUI {
 
         System.out.println("Turno del jugador " + getJugador());
         for (int i=0; i< 3; i++){
-            System.out.print("| ");
+            System.out.print(i+1 + "| ");
             for (int j=0; j<3; j++){
                 System.out.print((tablero[i][j] == ' ') ? " " : tablero[i][j]);
                 System.out.print(" | ");
