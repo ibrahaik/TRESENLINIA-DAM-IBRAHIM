@@ -1,15 +1,29 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+//El bucle WHILE no está parando cuando se supone que tiene que parar. * SOLUCIONADO, && en vez de || *
 public class Main {
+//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
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        TUI tui = new TUI();
+        Joc joc = new Joc();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        //menu inicial
+        tui.mostrarMenu();
+
+        //si se empieza una nueva partida
+        if (tui.partida) {
+            joc.novaPartida();
+            int contador = 0;
+            while(!joc.jugadaGuanyadora() && contador <= 9) {
+                contador++;
+                tui.jugadorActual();
+                tui.mostrarTaulell(joc.getTablero());
+                int[] posicions = tui.recollirJugada();
+                joc.jugar(posicions[0], posicions[1]);
+            }
+            if (joc.jugadaGuanyadora()){
+                tui.mostrarTaulell(joc.getTablero());
+                tui.ganador();
+            }
         }
+
     }
 }
