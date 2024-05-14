@@ -10,10 +10,12 @@ public class Joc {
             {0, 0, 0}
     };
 
+    boolean ocupada = false;
+
     public char[][] getTablero() {
         return tablero;
     }
-
+    public boolean getOcupada() {return ocupada;}
 
     public void  novaPartida(){
 
@@ -79,15 +81,20 @@ public class Joc {
 
         fila = fila -1;
         columna = columna -1;
+        ocupada = false;
 
-
-        if (jugador == 1){
-            tablero[fila][columna] = 'X';
+        if (tablero[fila][columna] == 'X' || tablero[fila][columna] == 'O') {
+            ocupada = true;
         }else {
-            tablero[fila][columna] = 'O';
+            if (jugador == 1){
+                tablero[fila][columna] = 'X';
+            }else {
+                tablero[fila][columna] = 'O';
+            }
         }
 
     }
+
     }
 
 

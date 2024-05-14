@@ -109,8 +109,13 @@ public class TUI {
 
     boolean error = false;
 
-    public int[] recollirJugada(){
+    public int[] recollirJugada(boolean ocupada){
+
         System.out.println("¿En qué casilla te quieres posicionar? [1 - 3]");
+
+        if (ocupada) {
+            System.out.println("Casilla ocupada, vuelve a escoger");
+        }
         int filas = sc.nextInt();
         int columnas = sc.nextInt();
 

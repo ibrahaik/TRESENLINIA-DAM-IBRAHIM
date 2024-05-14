@@ -1,4 +1,5 @@
 //El bucle WHILE no está parando cuando se supone que tiene que parar. * SOLUCIONADO, && en vez de || *
+//Cuando se pone una X o una O en una casilla ocupada se tiene que avisar al jugador y hacer que repita la tirada de manera infinita hasta que coloque la ficha en una casilla vacía
 public class Main {
 //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
     public static void main(String[] args) {
@@ -16,7 +17,7 @@ public class Main {
                 contador++;
                 tui.jugadorActual();
                 tui.mostrarTaulell(joc.getTablero());
-                int[] posicions = tui.recollirJugada();
+                int[] posicions = tui.recollirJugada(joc.getOcupada());
                 joc.jugar(posicions[0], posicions[1], tui.getJugador());
             }
             if (joc.jugadaGuanyadora()){
