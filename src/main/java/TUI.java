@@ -3,10 +3,6 @@ import java.util.Scanner;
 public class TUI {
     Scanner sc = new Scanner(System.in);
 
-    Joc joc = new Joc();
-    char[][] tablero = joc.getTablero();
-    int jugador = 2;
-
     boolean partida = false;
     boolean cpartida = false;
     boolean configuracion = false;
@@ -73,26 +69,13 @@ public class TUI {
 
     }
 
-    //////
-     public void jugadorActual() {
-        if (jugador == 2){
-            jugador = 1;
-        }else {
-            jugador = 2;
-        }
-}
-
-    public int getJugador() {
-        return jugador;
+    public void ganador(int jugador) {
+        System.out.println("¡ Tres en raya, GANADOR JUGADOR " + jugador + " !!");
     }
 
-    public void ganador() {
-        System.out.println("¡ Tres en raya, GANADOR JUGADOR " + getJugador() + " !!");
-    }
+    public void mostrarTaulell(char[][] tablero, int jugador){
 
-    public void mostrarTaulell(char[][] tablero){
-
-        System.out.println("Turno del jugador " + getJugador());
+        System.out.println("Turno del jugador " + jugador);
         for (int i=0; i< 3; i++){
             System.out.print(i+1 + "| ");
             for (int j=0; j<3; j++){
@@ -109,13 +92,11 @@ public class TUI {
 
     boolean error = false;
 
-    public int[] recollirJugada(boolean ocupada){
+    public int[] recollirJugada(){
 
         System.out.println("¿En qué casilla te quieres posicionar? [1 - 3]");
 
-        if (ocupada) {
-            System.out.println("Casilla ocupada, vuelve a escoger");
-        }
+
         int filas = sc.nextInt();
         int columnas = sc.nextInt();
 
@@ -126,6 +107,13 @@ public class TUI {
 
             return new int[]{filas, columnas};
 
+    }
+
+    public void Ocupada(int ocupada){
+
+        if (ocupada == 1) {
+            System.out.println("¡¡¡¡¡¡  Casilla ocupada  !!!!!!!");
+        }
     }
 
 

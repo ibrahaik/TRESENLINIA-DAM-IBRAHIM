@@ -1,24 +1,18 @@
-import java.util.Scanner;
-
 public class Joc {
 
-    Scanner sc = new Scanner(System.in);
 
-    char[][] tablero = {
-            {0, 0, 0},
-            {0, 0, 0},
-            {0, 0, 0}
-    };
+    private char[][] tablero;
+    private int jugador = 0;
 
-    boolean ocupada = false;
-
+    public int getJugador(){return jugador;}
     public char[][] getTablero() {
         return tablero;
     }
-    public boolean getOcupada() {return ocupada;}
+
 
     public void  novaPartida(){
-
+        this.jugador = 1;
+        this.tablero = new char[3][3];
         for (int i=0; i< 3; i++){
             for (int j=0; j<3; j++){
                 this.tablero[i][j] = ' ';
@@ -77,25 +71,19 @@ public class Joc {
 
 
 
-    public void jugar(int fila, int columna, int jugador) {
-
-        fila = fila -1;
-        columna = columna -1;
-        ocupada = false;
-
-        if (tablero[fila][columna] == 'X' || tablero[fila][columna] == 'O') {
-            ocupada = true;
-        }else {
-            if (jugador == 1){
-                tablero[fila][columna] = 'X';
-            }else {
-                tablero[fila][columna] = 'O';
-            }
+    public boolean jugar(int fila, int columna) {
+        if(tablero[fila][columna] != ' ') return false;
+        else if(fila < 0 || fila >= this.tablero.length) return false;
+        else if(columna < 0 || columna > this.tablero.length) return false;
+        else{
+            tablero[fila][columna] = (this.jugador == 1 ? 'X' : 'O');
+            this.jugador = (this.jugador == 1 ? 2 : 1);
+            return true;
         }
-
     }
+}
 
-    }
+
 
 
 
