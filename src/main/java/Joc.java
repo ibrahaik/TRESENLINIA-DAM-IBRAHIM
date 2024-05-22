@@ -1,17 +1,26 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+import java.io.FileWriter;
+
 public class Joc {
 
-
+//CREACIÓN DE TABLERO Y JUGADOR
     private char[][] tablero;
-    private int jugador = 0;
+    private int jugador = 2;
+    boolean partidaGuardada = false;
 
     public int getJugador(){return jugador;}
     public char[][] getTablero() {
         return tablero;
     }
 
-
+//Se inicializa una nueva partida con el tablero en blanco
     public void  novaPartida(){
-        this.jugador = 1;
+
         this.tablero = new char[3][3];
         for (int i=0; i< 3; i++){
             for (int j=0; j<3; j++){
@@ -21,6 +30,38 @@ public class Joc {
 
     }
 
+    public void guardarPartida() {
+
+        //Obtener formato de fecha y hora actual
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String horaActual = formatoFecha.format(new Date());
+
+        //Si no existe se crea la carpeta savedgames
+        File carpetaSavedGames = new File("/home/ibrahim.haik.el.haouzi.mrabet/Escriptori/savedgames");
+        if (!carpetaSavedGames.exists()) {
+            carpetaSavedGames.mkdir();
+        }
+
+        //Crear el archivo con el formato correcto fecha y hora
+        File archivoPartida = new File("/home/ibrahim.haik.el.haouzi.mrabet/Escriptori/savedgames/" + horaActual + ".txt");
+
+        //Guardar estado de la partida en el archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoPartida))) {
+            writer.write(Integer.toString(jugador));
+            writer.newLine();
+
+            for (int i=0; i< tablero.length; i++) {
+                for (int j=0; j< tablero.length; j++) {
+                    writer.write(tablero[i][j]);
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar la partida: " + e.getMessage());
+        }
+
+    }
+//Se calculan las posibles jugadas ganadoras
     public boolean jugadaGuanyadora(){
 
     //JUGADA GANADORA JUGADOR 1 , X
@@ -70,19 +111,36 @@ public class Joc {
     }
 
 
-
+//Se le resta un -1 a fila y columna para hacerlo más amigable al usuario.
+    //Si la casilla está ocupada devuelve false, si se sale del tablero devuelve false
     public boolean jugar(int fila, int columna) {
-        if(tablero[fila][columna] != ' ') return false;
-        else if(fila < 0 || fila >= this.tablero.length) return false;
-        else if(columna < 0 || columna > this.tablero.length) return false;
-        else{
-            tablero[fila][columna] = (this.jugador == 1 ? 'X' : 'O');
-            this.jugador = (this.jugador == 1 ? 2 : 1);
-            return true;
+
+        int filaReal = fila - 1;
+        int columnaReal = columna - 1;
+
+        if (filaReal == -1 && columnaReal == -1) {
+            guardarPartida();
+            partidaGuardada = true;
+            return false;
+        } else {
+            if (tablero[filaReal][columnaReal] != ' ') {
+                return false;
+            } else {
+                tablero[filaReal][columnaReal] = (this.jugador == 1 ? 'X' : 'O');
+                return true;
+            }
         }
     }
-}
+//Si el jugador es 1 pasa a ser 2 y si es 2 pasa a 1
+    public void Jugador(){
+        if (jugador == 1){
+            jugador = 2;
+        }else {
+            jugador = 1;
+        }
+    }
 
+}
 
 
 
