@@ -1,10 +1,7 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.io.FileWriter;
 
 public class Joc {
 
@@ -60,6 +57,26 @@ public class Joc {
             System.out.println("Error al guardar la partida: " + e.getMessage());
         }
 
+    }
+
+    public void cargarPartida(File archivo) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            // Leer el jugador actual desde el archivo
+            this.jugador = Integer.parseInt(reader.readLine());
+
+            novaPartida();
+            // Leer el contenido del tablero desde el archivo
+            String linea;
+            int fila = 0;
+            while ((linea = reader.readLine()) != null) {
+                for (int columna = 0; columna < linea.length(); columna++) {
+                    this.tablero[fila][columna] = linea.charAt(columna);
+                }
+                fila++;
+            }
+        } catch (IOException e) {
+            System.err.println("Error al cargar la partida: " + e.getMessage());
+        }
     }
 //Se calculan las posibles jugadas ganadoras
     public boolean jugadaGuanyadora(){
@@ -141,6 +158,9 @@ public class Joc {
     }
 
 }
+
+
+
 
 
 
