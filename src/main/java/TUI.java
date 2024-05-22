@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileWriter;
@@ -22,10 +23,8 @@ public class TUI {
         cpartida = true;
         System.out.println("Has seleccionado, ¡ Cargar partida !");
         System.out.println("------------------");
-        System.out.println("1. Nueva partida");
-        System.out.println("2. Cargar partida");
-        System.out.println("3. Configuración");
-        System.out.println("4. Salir");
+
+
     }
 
     public void menuConfiguracion() {
@@ -94,6 +93,33 @@ public class TUI {
 
     }
 
+    public File seleccionarArchivoPartidaGuardada () {
+
+        File carpetaSavedGames = new File("/home/ibrahim.haik.el.haouzi.mrabet/Escriptori/savedgames");
+        File[] archivos = carpetaSavedGames.listFiles((dir, name) -> name.endsWith(".txt"));
+
+        if (archivos == null || archivos.length == 0) {
+            System.out.println("No hay partidas guardadas.");
+            return null;
+        }
+
+        System.out.println("Partidas guardadas disponibles:");
+        for (int i = 0; i < archivos.length; i++) {
+            System.out.println((i + 1) + ". " + archivos[i].getName());
+        }
+
+        System.out.println("Selecciona el número de la partida que deseas cargar:");
+        Scanner sc = new Scanner(System.in);
+        int seleccion = sc.nextInt() - 1;
+
+        if (seleccion < 0 || seleccion >= archivos.length) {
+            System.out.println("Selección inválida.");
+            return null;
+        }
+
+        return archivos[seleccion];
+    }
+
     public void ganador(int jugador) {
         System.out.println("¡ Tres en raya, GANADOR JUGADOR " + jugador + " !!");
     }
@@ -138,7 +164,6 @@ public class TUI {
 
     }
 }
-
 
 
 
